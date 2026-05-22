@@ -15,6 +15,28 @@
       --card: #fae6d2;
       --yes: #D8A7B1;
       --yesHover: #ff3b7a;
+
+      .result {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .result-images {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .result-images img {
+        max-width: 180px;
+        width: 40%;
+        height: auto;
+      }
+
     }
 
     * { box-sizing: border-box; }
@@ -164,8 +186,10 @@
 
     <section class="result" id="result">
       <h2>HALLA! 🎉</h2>
-      <img class="fireworks" src="bilder/hand.jpeg" alt="bilde 1">
-      <img class="fireworks" src="bilder/kropp.jpeg" alt="bilde 2">
+      <div class="result-images">
+        <img src="bilder/hand.jpeg" alt="bilde 1">
+        <img src="bilder/kropp.jpeg" alt="bilde 2">
+      </div>
     </section>
   </main>
 
