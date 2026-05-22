@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Hva tror du kjønnet er?</title>
+  <title>Gender reveal</title>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --bg1: #ffd6e7;
-      --bg2: #ffeef6;
-      --card: #ffffffcc;
-      --yes: #ff3b7a;
-      --yesHover: #ff1f68;
+      --bg1: #F8F5F2;
+      --bg2: #f5c697;
+      --card: #7DA0CA;
+      --yes: #D8A7B1;
+      --yesHover: #ff3b7a;
     }
 
     * { box-sizing: border-box; }
@@ -150,14 +150,14 @@
       <path d="M160 185 C150 165 120 170 120 195 C120 220 160 230 160 230 C160 230 200 220 200 195 C200 170 170 165 160 185 Z" fill="#ff3b7a"/>
     </svg>
 
-    <h1 id="question">Hans-Jørgen vil du gå på date?</h1>
+    <h1 id="question">Hva tror du kjønnet er?</h1>
 
     <section class="button-zone" id="zone">
-      <button id="yesBtn">Ja</button>
-      <button id="noBtn">Nei</button>
+      <button id="yesBtn">Jente</button>
+      <button id="noBtn">Gutt</button>
     </section>
 
-    <div class="hint" id="hint">“Nei” er litt sjenert 😈</div>
+    <div class="hint" id="hint">Er det gutt eller jente?</div>
 
     <section class="result" id="result">
       <h2>YEY! 🎉</h2>
