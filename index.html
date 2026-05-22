@@ -10,11 +10,11 @@
 
   <style>
     :root {
-      --bg1: #f3ba81;
-      --bg2: #f5dabe;
-      --card: #D6CCC2;
-      --yes: #D8A7B1;
-      --yesHover: #ff3b7a;
+      --bg1: #F7F4F1;
+      --bg2: #EDEFF2;
+      --card: rgba(255, 255, 255, 0.75);
+      --girl: #D8A7B1;
+      --boy: #7DA0CA;
     }
 
     * { box-sizing: border-box; }
@@ -24,7 +24,7 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
       font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
@@ -43,10 +43,10 @@
       width: min(720px, 92vw);
       padding: 16px 12px;
       background: var(--card);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       border-radius: 22px;
       text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,.15);
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
       max-height: 95vh;
       display: flex;
       flex-direction: column;
@@ -92,10 +92,17 @@
       transition: transform .12s ease, background .12s ease;
     }
 
-    #yesBtn { left: 18%; background: var(--yes); color: #fff; }
-    #yesBtn:hover { background: var(--yesHover); }
+    #yesBtn {
+      left: 18%;
+      background: var(--girl);
+      color: #fff;
+    }
 
-    #noBtn { left: 62%; background: #7DA0CA; color: #fff; }
+    #noBtn {
+      left: 62%;
+      background: var(--boy);
+      color: #fff;
+    }
 
     .hint { margin-top: 10px; font-size: 13px; opacity: .7; }
 
@@ -109,7 +116,10 @@
       width: 100%;
     }
 
-    .result h2 { font-size: clamp(30px, 4.5vw, 46px); margin: 10px 0; }
+    .result h2 {
+      font-size: clamp(30px, 4.5vw, 46px);
+      margin: 10px 0;
+    }
 
     .fireworks {
       max-width: 100%;
@@ -130,37 +140,20 @@
   <canvas id="confettiCanvas"></canvas>
 
   <main class="card">
-    <!-- Hund med hjerte -->
-    <svg class="art" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="160" cy="235" rx="75" ry="12" fill="#000" opacity="0.08"/>
-      <path d="M95 105 C70 95 70 60 105 65 C115 80 115 100 95 105 Z" fill="#8b5a2b"/>
-      <path d="M225 105 C250 95 250 60 215 65 C205 80 205 100 225 105 Z" fill="#8b5a2b"/>
-      <ellipse cx="160" cy="125" rx="70" ry="60" fill="#c58a4a"/>
-      <ellipse cx="160" cy="155" rx="50" ry="30" fill="#e8b77a"/>
-      <ellipse cx="160" cy="150" rx="12" ry="8" fill="#222"/>
-      <path d="M160 158 L160 168" stroke="#5a3a1a" stroke-width="3"/>
-      <path d="M160 168 Q150 175 140 168" stroke="#5a3a1a" stroke-width="3" fill="none"/>
-      <path d="M160 168 Q170 175 180 168" stroke="#5a3a1a" stroke-width="3" fill="none"/>
-      <ellipse cx="135" cy="120" rx="7" ry="9" fill="#222"/>
-      <ellipse cx="185" cy="120" rx="7" ry="9" fill="#222"/>
-      <circle cx="138" cy="118" r="2" fill="#fff"/>
-      <circle cx="188" cy="118" r="2" fill="#fff"/>
-      <ellipse cx="125" cy="200" rx="22" ry="16" fill="#b97a3d"/>
-      <ellipse cx="195" cy="200" rx="22" ry="16" fill="#b97a3d"/>
-      <path d="M160 185 C150 165 120 170 120 195 C120 220 160 230 160 230 C160 230 200 220 200 195 C200 170 170 165 160 185 Z" fill="#ff3b7a"/>
-    </svg>
+    <!-- Baby ikon -->
+    <div class="art">🍼</div>
 
     <h1 id="question">Hva tror du kjønnet er?</h1>
 
     <section class="button-zone" id="zone">
-      <button id="yesBtn">Jente</button>
-      <button id="noBtn">Gutt</button>
+      <button id="yesBtn">Jente 💖</button>
+      <button id="noBtn">Gutt 💙</button>
     </section>
 
-    <div class="hint" id="hint">Er det gutt eller jente?</div>
+    <div class="hint" id="hint">Velg kva du trur 👀</div>
 
     <section class="result" id="result">
-      <h2>YEY! 🎉</h2>
+      <h2>DET STEMMER! 🎉</h2>
       <img class="fireworks" src="https://media.tenor.com/XZqcuBcpmmkAAAAM/penguins-win.gif" alt="Fireworks"/>
     </section>
   </main>
@@ -173,8 +166,8 @@
     const hint = document.getElementById("hint");
     const question = document.getElementById("question");
 
-    /* ---------- CONFETTI ---------- */
     const confettiCanvas = document.getElementById("confettiCanvas");
+
     function resizeConfettiCanvas() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       confettiCanvas.width = Math.floor(window.innerWidth * dpr);
@@ -182,46 +175,68 @@
       confettiCanvas.style.width = "100vw";
       confettiCanvas.style.height = "100vh";
     }
+
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
-    window.addEventListener("orientationchange", () => setTimeout(resizeConfettiCanvas, 150));
 
-    const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
+    const confettiInstance = confetti.create(confettiCanvas, {
+      resize: false,
+      useWorker: true
+    });
+
     function fullScreenConfetti() {
       const end = Date.now() + 1600;
+
       (function frame() {
-        confettiInstance({ particleCount: 12, spread: 90, startVelocity: 45, ticks: 180, origin: { x: Math.random(), y: Math.random()*0.3 } });
+        confettiInstance({
+          particleCount: 12,
+          spread: 90,
+          startVelocity: 45,
+          ticks: 180,
+          origin: { x: Math.random(), y: Math.random() * 0.3 }
+        });
+
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
+
       setTimeout(() => {
-        confettiInstance({ particleCount: 300, spread: 140, startVelocity: 60, ticks: 220, origin: { x: 0.5, y: 0.55 } });
+        confettiInstance({
+          particleCount: 300,
+          spread: 140,
+          startVelocity: 60,
+          ticks: 220,
+          origin: { x: 0.5, y: 0.55 }
+        });
       }, 300);
     }
 
-    /* ---------- YES BUTTON GROWS ---------- */
     let yesScale = 1;
+
     function growYes() {
       yesScale = Math.min(2.2, yesScale + 0.05);
       yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
     }
 
-    /* ---------- NO BUTTON RUNS AWAY ---------- */
-    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+    function clamp(n, min, max) {
+      return Math.max(min, Math.min(max, n));
+    }
 
     function moveNo(px, py) {
       const z = zone.getBoundingClientRect();
       const b = noBtn.getBoundingClientRect();
 
-      let dx = (b.left + b.width/2) - px;
-      let dy = (b.top + b.height/2) - py;
-      let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag; dy /= mag;
+      let dx = (b.left + b.width / 2) - px;
+      let dy = (b.top + b.height / 2) - py;
 
-      let newLeft = (b.left - z.left) + dx*150;
-      let newTop  = (b.top - z.top) + dy*150;
+      let mag = Math.hypot(dx, dy) || 1;
+      dx /= mag;
+      dy /= mag;
+
+      let newLeft = (b.left - z.left) + dx * 150;
+      let newTop = (b.top - z.top) + dy * 150;
 
       newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop  = clamp(newTop, 0, z.height - b.height);
+      newTop = clamp(newTop, 0, z.height - b.height);
 
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
@@ -232,41 +247,25 @@
 
     function handleMove(x, y) {
       const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot((b.left + b.width/2) - x, (b.top + b.height/2) - y);
-      if(d < 140) moveNo(x, y);
+      const d = Math.hypot((b.left + b.width / 2) - x, (b.top + b.height / 2) - y);
+      if (d < 140) moveNo(x, y);
     }
 
-    // ---------- Throttle for mobil / jevn animasjon ----------
-    function throttle(fn, limit) {
-      let waiting = false;
-      return function(...args) {
-        if(!waiting) {
-          fn.apply(this, args);
-          waiting = true;
-          setTimeout(() => waiting = false, limit);
-        }
-      };
-    }
-
-    const throttledHandleMove = throttle(handleMove, 16); // ~60 fps
-
-    // PC mus – original hastighet
     zone.addEventListener("mousemove", e => handleMove(e.clientX, e.clientY));
 
-    // Mobil touch – throttlet
-    zone.addEventListener("touchmove", e => { 
-      if(e.touches.length>0) throttledHandleMove(e.touches[0].clientX, e.touches[0].clientY); 
-    }, {passive:false});
+    zone.addEventListener("touchmove", e => {
+      if (e.touches.length > 0) {
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: false });
 
     noBtn.addEventListener("click", e => e.preventDefault());
 
-    /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
       hint.style.display = "none";
       question.style.display = "none";
       result.style.display = "flex";
-      resizeConfettiCanvas();
       fullScreenConfetti();
     });
   </script>
