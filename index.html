@@ -11,7 +11,7 @@
   <style>
     :root {
       --bg1: #ffd6e7;
-      --bg2: #ffeef6;
+      --bg2: #343fe3;
       --card: #fae6d2;
       --yes: #D8A7B1;
       --yesHover: #ff3b7a;
@@ -24,7 +24,10 @@
       min-height: 100svh;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+      background:
+        radial-gradient(circle at 25% 50%, rgba(0, 120, 255, 0.35), transparent 60%),
+        radial-gradient(circle at 75% 50%, rgba(255, 60, 140, 0.35), transparent 60%),
+        linear-gradient(90deg, #8ec1fb 0%, #fc8fbd 100%);
       font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
